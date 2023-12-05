@@ -1,27 +1,55 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
+const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
 
-interface INotificationState {
+interface ShowNotificationAction {
+  type: typeof SHOW_NOTIFICATION;
+  payload: string;
+}
+
+interface HideNotificationAction {
+  type: typeof HIDE_NOTIFICATION;
+}
+
+const showNotification = (message: string): ShowNotificationAction => ({
+  type: SHOW_NOTIFICATION,
+  payload: message,
+});
+
+const hideNotification = (): HideNotificationAction => ({
+  type: HIDE_NOTIFICATION,
+});
+
+interface NotificationState {
   message: string;
   isVisible: boolean;
 }
 
-const initialState: INotificationState = {
+const initialState: NotificationState = {
   message: "string",
   isVisible: false,
 };
 
-const notificationSlice = createSlice({
-  name: "notificationSlice",
-  initialState,
-  reducers: {
-    showNotification: (state, action: PayloadAction<string>) => {
-      state.message = action.payload;
-      state.isVisible = true;
-    },
-    hideNotification: (state) => {
-      state.isVisible = false;
-    },
-  },
-});
+type NotificationAction = ShowNotificationAction | HideNotificationAction;
 
-export { notificationSlice };
+const notificationReducer = (
+  state = initialState,
+  action: NotificationAction,
+): NotificationState => {
+  switch (action.type) {
+    case SHOW_NOTIFICATION:
+      return {
+        ...state,
+        message: action.payload,
+        isVisible: true,
+      };
+    case HIDE_NOTIFICATION:
+      return {
+        ...state,
+        isVisible: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export { notificationReducer, showNotification, hideNotification };

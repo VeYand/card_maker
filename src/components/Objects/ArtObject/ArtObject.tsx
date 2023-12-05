@@ -15,7 +15,7 @@ interface ArtObjectProps {
 }
 
 const ArtObject = ({ artObject, onResize }: ArtObjectProps) => {
-  const canvasSize = useAppSelector((state) => state.canvasSlice);
+  const canvasSize = useAppSelector((state) => state.canvas);
 
   return (
     <div

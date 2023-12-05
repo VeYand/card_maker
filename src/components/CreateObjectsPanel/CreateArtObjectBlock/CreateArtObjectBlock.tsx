@@ -3,14 +3,14 @@ import classes from "./CreateArtObjectBlock.module.css";
 import { artObjectList } from "./data/ArtObjectList";
 import { useAppDispatch } from "../../../redux/hooks";
 import { objectsSlice } from "../../Objects/model/objectsSlice";
-import { HandySvg } from "handy-svg";
+import { addObject } from "../../Objects/model/objectsSlice";
 
 const CreateArtObjectBlock = () => {
   const dispatch = useAppDispatch();
 
   const createArtObject = (src: string) => {
     dispatch(
-      objectsSlice.actions.addObject({
+      addObject({
         id: Date.now().toString(),
         objectSrc: src,
         isSelected: false,

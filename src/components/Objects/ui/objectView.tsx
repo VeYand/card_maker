@@ -12,7 +12,7 @@ import { Text } from "../Text/Text";
 import { Image } from "../Image/Image";
 import { ArtObject } from "../ArtObject/ArtObject";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { objectsSlice } from "../model/objectsSlice";
+import { changeObjectIsSelected } from "../model/objectsSlice";
 import { useObjectInteraction } from "../../../hooks/useObjectInteraction";
 
 interface ObjectProps {
@@ -21,7 +21,7 @@ interface ObjectProps {
 
 const ObjectView = ({ object }: ObjectProps): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const canvasSize = useAppSelector((state) => state.canvasSlice);
+  const canvasSize = useAppSelector((state) => state.canvas);
 
   const { handleMouseDown } = useObjectInteraction({
     object,
@@ -51,7 +51,7 @@ const ObjectView = ({ object }: ObjectProps): React.ReactElement => {
         onClick={(e) => {
           e.stopPropagation();
           dispatch(
-            objectsSlice.actions.changeObjectIsSelected({
+            changeObjectIsSelected({
               objectId: object.id,
               isSelected: true,
             }),

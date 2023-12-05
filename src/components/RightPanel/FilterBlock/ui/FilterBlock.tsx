@@ -1,16 +1,16 @@
 import React from "react";
 import classes from "./FilterBlock.module.css";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { filterSlice } from "../model/filterSlice";
+import { setFilter } from "../model/filterSlice";
 import { Color, colorList } from "../data/templateColors";
 
 const FilterBlock = () => {
-  const filter = useAppSelector((state) => state.filterSlice);
+  const filter = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
 
   const changeColor = (color: "r" | "g" | "b" | "a", value: number) => {
     dispatch(
-      filterSlice.actions.setFilter({
+      setFilter({
         r: color === "r" ? value : filter.r,
         g: color === "g" ? value : filter.g,
         b: color === "b" ? value : filter.b,
@@ -21,7 +21,7 @@ const FilterBlock = () => {
 
   const changeColorTemplate = (color: Color) => {
     dispatch(
-      filterSlice.actions.setFilter({
+      setFilter({
         r: color.r,
         g: color.g,
         b: color.b,

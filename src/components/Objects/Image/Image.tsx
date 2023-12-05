@@ -14,7 +14,7 @@ interface ImageProps {
 }
 
 const Image = ({ imageObject, onResize }: ImageProps) => {
-  const canvasSize = useAppSelector((state) => state.canvasSlice);
+  const canvasSize = useAppSelector((state) => state.canvas);
 
   return (
     <div

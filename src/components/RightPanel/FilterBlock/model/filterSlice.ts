@@ -1,5 +1,16 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FilterType } from "../../../../types/types";
+
+const SET_FILTER = "SET_FILTER";
+
+interface SetFilterAction {
+  type: typeof SET_FILTER;
+  payload: FilterType;
+}
+
+const setFilter = (payload: FilterType): SetFilterAction => ({
+  type: SET_FILTER,
+  payload,
+});
 
 const initialState: FilterType = {
   r: 0,
@@ -8,17 +19,24 @@ const initialState: FilterType = {
   a: 0,
 };
 
-const filterSlice = createSlice({
-  name: "filterSlice",
-  initialState,
-  reducers: {
-    setFilter: (state, action: PayloadAction<FilterType>) => {
-      state.r = action.payload.r;
-      state.g = action.payload.g;
-      state.b = action.payload.b;
-      state.a = action.payload.a;
-    },
-  },
-});
+type FilterAction = SetFilterAction;
 
-export { filterSlice };
+const filterReducer = (
+  state = initialState,
+  action: FilterAction,
+): FilterType => {
+  switch (action.type) {
+    case SET_FILTER:
+      return {
+        ...state,
+        r: action.payload.r,
+        g: action.payload.g,
+        b: action.payload.b,
+        a: action.payload.a,
+      };
+    default:
+      return state;
+  }
+};
+
+export { filterReducer, setFilter };

@@ -1,6 +1,11 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { objectsSlice } from "../../Objects/model/objectsSlice";
+import {
+  changeTextObject,
+  moveBackground,
+  moveForeground,
+  removeObjects,
+} from "../../Objects/model/objectsSlice";
 import {
   isArtType,
   isImageType,
@@ -21,7 +26,7 @@ import {
 } from "./data/fontData";
 
 const ToolBlock = () => {
-  const objects = useAppSelector((state) => state.objectsSlice.objects);
+  const objects = useAppSelector((state) => state.objects);
   const dispatch = useAppDispatch();
   const selectedObjects = objects.filter((object: ObjectType) => {
     return object.isSelected;
@@ -45,12 +50,12 @@ const ToolBlock = () => {
   }
 
   const removeSelectedObjects = () => {
-    dispatch(objectsSlice.actions.removeObjects(selectedObjects));
+    dispatch(removeObjects(selectedObjects));
   };
 
   const changeTextColor = (newColor: FontColorType) => {
     dispatch(
-      objectsSlice.actions.changeTextObject({
+      changeTextObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -68,7 +73,7 @@ const ToolBlock = () => {
 
   const changeTextSize = (newSize: FontSizeType) => {
     dispatch(
-      objectsSlice.actions.changeTextObject({
+      changeTextObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -86,7 +91,7 @@ const ToolBlock = () => {
 
   const changeTextFontFamily = (newFontFamily: FontFamilyType) => {
     dispatch(
-      objectsSlice.actions.changeTextObject({
+      changeTextObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -106,7 +111,7 @@ const ToolBlock = () => {
     const oldDecorations = (selectedObject as TextType).decorations;
     if (!oldDecorations.includes(newTextDecoration)) {
       dispatch(
-        objectsSlice.actions.changeTextObject({
+        changeTextObject({
           id: selectedObject.id,
           posX: selectedObject.posX,
           posY: selectedObject.posY,
@@ -127,7 +132,7 @@ const ToolBlock = () => {
     const oldDecorations = (selectedObject as TextType).decorations;
     if (oldDecorations.includes(decoration)) {
       dispatch(
-        objectsSlice.actions.changeTextObject({
+        changeTextObject({
           id: selectedObject.id,
           posX: selectedObject.posX,
           posY: selectedObject.posY,
@@ -144,12 +149,12 @@ const ToolBlock = () => {
     }
   };
 
-  const moveForeground = () => {
-    dispatch(objectsSlice.actions.moveForeground(selectedObjects));
+  const moveForegroundClickHandler = () => {
+    dispatch(moveForeground(selectedObjects));
   };
 
-  const moveBackground = () => {
-    dispatch(objectsSlice.actions.moveBackground(selectedObjects));
+  const moveBackgroundClickHandler = () => {
+    dispatch(moveBackground(selectedObjects));
   };
 
   return (
@@ -232,10 +237,10 @@ const ToolBlock = () => {
           </div>
         </div>
         <div className={classes.buttonsInline}>
-          <div className={classes.button} onClick={moveForeground}>
+          <div className={classes.button} onClick={moveForegroundClickHandler}>
             На передний план
           </div>
-          <div className={classes.button} onClick={moveBackground}>
+          <div className={classes.button} onClick={moveBackgroundClickHandler}>
             На задний план
           </div>
         </div>

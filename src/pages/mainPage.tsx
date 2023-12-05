@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ObjectType } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { objectsSlice } from "../components/Objects/model/objectsSlice";
+import { setObjects } from "../components/Objects/model/objectsSlice";
 import { objectList } from "../data/data";
 import TopPanel from "../components/TopPanel/TopPanel";
 import ToolBar from "../components/CreateObjectsPanel/ui/CreateObjectsPanel";
@@ -12,10 +12,10 @@ import classes from "./mainPage.module.css";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
-  const objects = useAppSelector((state) => state.objectsSlice.objects);
+  const objects = useAppSelector((state) => state.objects);
 
   useEffect(() => {
-    dispatch(objectsSlice.actions.setObjects(objectList));
+    dispatch(setObjects(objectList));
   }, []);
 
   return (

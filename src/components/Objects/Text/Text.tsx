@@ -4,7 +4,7 @@ import classes from "./Text.module.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ResizeControls from "../ResizeControls/ResizeControls";
 import { ResizeDirection } from "../ResizeControls/ResizeDirection";
-import { objectsSlice } from "../model/objectsSlice";
+import { changeTextObject } from "../model/objectsSlice";
 
 interface TextProps {
   textObject: TextType;
@@ -15,12 +15,12 @@ interface TextProps {
 }
 
 const Text = ({ textObject, onResize }: TextProps) => {
-  const canvasSize = useAppSelector((state) => state.canvasSlice);
+  const canvasSize = useAppSelector((state) => state.canvas);
   const dispatch = useAppDispatch();
 
   const handleTextChange = (value: string) => {
     dispatch(
-      objectsSlice.actions.changeTextObject({
+      changeTextObject({
         id: textObject.id,
         posX: textObject.posX,
         posY: textObject.posY,

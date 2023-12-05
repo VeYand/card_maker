@@ -1,12 +1,10 @@
 import { CardDataType, ObjectType } from "../../../types/types";
 import React from "react";
-import { AppDispatch } from "../../../redux/store";
-import { filterSlice } from "../../RightPanel/FilterBlock/model/filterSlice";
-import { canvasSlice } from "../../Canvas/model/canvasSlice";
-import { objectsSlice } from "../../Objects/model/objectsSlice";
-import { notificationSlice } from "./notificationSlice";
 
-const saveAsJson = (cardData: CardDataType, dispatch: AppDispatch) => {
+const saveAsJson = (
+  cardData: CardDataType,
+  showMessage: (message: string) => void,
+) => {
   const jsonString = JSON.stringify(cardData);
   const blob = new Blob([jsonString], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -15,12 +13,10 @@ const saveAsJson = (cardData: CardDataType, dispatch: AppDispatch) => {
   a.download = "YourCard.json";
   a.click();
   URL.revokeObjectURL(url);
-  dispatch(notificationSlice.actions.showNotification("Saved successfully"));
-  setTimeout(() => {
-    dispatch(notificationSlice.actions.hideNotification());
-  }, 3000);
+  showMessage("Saved successfully");
 };
 
+// eslint-disable-next-line
 const validateObject = (obj: any): obj is ObjectType => {
   return (
     typeof obj.id === "string" &&
@@ -37,11 +33,13 @@ const validateObject = (obj: any): obj is ObjectType => {
         typeof obj.fontFamily === "string" &&
         Array.isArray(obj.decorations) &&
         obj?.decorations?.every(
+          // eslint-disable-next-line
           (decoration: any) => typeof decoration === "string",
         )))
   );
 };
 
+// eslint-disable-next-line
 const validateCardData = (data: any): data is CardDataType => {
   return (
     typeof data.canvas === "object" &&
@@ -53,13 +51,14 @@ const validateCardData = (data: any): data is CardDataType => {
     typeof data.filter.b === "number" &&
     typeof data.filter.a === "number" &&
     Array.isArray(data.objects) &&
+    // eslint-disable-next-line
     data?.objects?.every((obj: any) => validateObject(obj))
   );
 };
 
 const handleJSONLoad = (
   event: React.ChangeEvent<HTMLInputElement>,
-  dispatch: AppDispatch,
+  loadCard: (cardData: CardDataType | null, errorMessage?: string) => void,
 ) => {
   const fileInput = event.target;
   const file = fileInput.files?.[0];
@@ -71,33 +70,12 @@ const handleJSONLoad = (
         const jsonString = e.target?.result as string;
         const jsonData = JSON.parse(jsonString);
         if (validateCardData(jsonData)) {
-          const cardData = jsonData as CardDataType;
-          dispatch(filterSlice.actions.setFilter(cardData.filter));
-          dispatch(canvasSlice.actions.setCanvasSize(cardData.canvas));
-          dispatch(objectsSlice.actions.setObjects(cardData.objects));
-          dispatch(
-            notificationSlice.actions.showNotification("Loaded successfully"),
-          );
-          setTimeout(() => {
-            dispatch(notificationSlice.actions.hideNotification());
-          }, 3000);
+          loadCard(jsonData as CardDataType);
         } else {
-          dispatch(
-            notificationSlice.actions.showNotification(
-              "Error loading JSON: Invalid format",
-            ),
-          );
-          setTimeout(() => {
-            dispatch(notificationSlice.actions.hideNotification());
-          }, 3000);
+          loadCard(null, "Error loading JSON: Invalid format");
         }
       } catch (error) {
-        dispatch(
-          notificationSlice.actions.showNotification("Error loading JSON"),
-        );
-        setTimeout(() => {
-          dispatch(notificationSlice.actions.hideNotification());
-        }, 3000);
+        loadCard(null, "Error loading JSON");
       }
     };
 

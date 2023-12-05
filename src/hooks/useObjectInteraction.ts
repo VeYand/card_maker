@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BoundingBoxType, ObjectType } from "../types/types";
 import { useAppDispatch } from "../redux/hooks";
 import { ResizeDirection } from "../components/Objects/ResizeControls/ResizeDirection";
-import { objectsSlice } from "../components/Objects/model/objectsSlice";
+import { changeBoundingBox } from "../components/Objects/model/objectsSlice";
 
 interface ObjectInteractionProps {
   object: ObjectType;
@@ -135,7 +135,7 @@ const useObjectInteraction = ({
       };
 
       dispatch(
-        objectsSlice.actions.changeBoundingBox({
+        changeBoundingBox({
           objectId: object.id,
           boundingBox: boundingBox,
         }),
@@ -215,7 +215,7 @@ const useObjectInteraction = ({
       };
 
       dispatch(
-        objectsSlice.actions.changeBoundingBox({
+        changeBoundingBox({
           objectId: object.id,
           boundingBox: boundingBox,
         }),

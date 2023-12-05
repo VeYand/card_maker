@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./CreateTextBlock.module.css";
 import { useAppDispatch } from "../../../redux/hooks";
-import { objectsSlice } from "../../Objects/model/objectsSlice";
+import { addObject } from "../../Objects/model/objectsSlice";
 import { TextType } from "../../../types/types";
 
 const CreateTextBlock = () => {
@@ -21,7 +21,7 @@ const CreateTextBlock = () => {
       decorations: [],
     };
 
-    dispatch(objectsSlice.actions.addObject(textObject));
+    dispatch(addObject(textObject));
   };
 
   return (
