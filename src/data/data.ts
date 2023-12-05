@@ -27,8 +27,6 @@ const image: ImageType = {
 };
 
 const artObject: ArtType = {
-  // Ширина и высота должна быть одинакова, нельзя растягивать
-  // Дополнительно изучить поведение
   id: "art",
   objectSrc: genetic,
   isSelected: false,

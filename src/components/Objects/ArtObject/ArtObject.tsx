@@ -4,7 +4,6 @@ import classes from "./ArtObject.module.css";
 import { useAppSelector } from "../../../redux/hooks";
 import { ResizeDirection } from "../ResizeControls/ResizeDirection";
 import ResizeControls from "../ResizeControls/ResizeControls";
-import { HandySvg } from "handy-svg";
 
 interface ArtObjectProps {
   artObject: ArtType;
@@ -29,7 +28,7 @@ const ArtObject = ({ artObject, onResize }: ArtObjectProps) => {
         border: artObject.isSelected ? "2px solid blue" : "",
       }}
     >
-      <HandySvg src={artObject.objectSrc} className={classes.artObject} />
+      <img src={artObject.objectSrc} className={classes.artObject} />
       {artObject.isSelected ? (
         <ResizeControls resizeHandler={onResize} />
       ) : null}

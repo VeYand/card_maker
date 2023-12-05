@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./CreateArtObjectBlock.module.css";
 import { artObjectList } from "./data/ArtObjectList";
 import { useAppDispatch } from "../../../redux/hooks";
-import { objectsSlice } from "../../Objects/model/objectsSlice";
 import { addObject } from "../../Objects/model/objectsSlice";
 
 const CreateArtObjectBlock = () => {
@@ -29,7 +28,7 @@ const CreateArtObjectBlock = () => {
         {artObjectList.map((src: string) => {
           return (
             <div key={src} onClick={() => createArtObject(src)}>
-              <HandySvg src={src} className={classes.previewImage} />
+              <img src={src} className={classes.previewImage} />
             </div>
           );
         })}
