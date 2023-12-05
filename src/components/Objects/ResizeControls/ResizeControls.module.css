@@ -1,0 +1,87 @@
+.topControlLine {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 93%;
+    height: 7%;
+    max-height: 20px;
+    cursor: n-resize;
+}
+
+.bottomControlLine {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 93%;
+    height: 7%;
+    max-height: 20px;
+    cursor: n-resize;
+}
+
+.rightControlLine {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 7%;
+    max-width: 20px;
+    height: 93%;
+    cursor: e-resize;
+    transform: translate(0, -50%);
+}
+
+.leftControlLine {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 7%;
+    max-width: 20px;
+    height: 93%;
+    cursor: e-resize;
+    transform: translate(0, -50%);
+}
+
+.topLeftControlLine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7%;
+    height: 7%;
+    max-width: 20px;
+    max-height: 20px;
+    cursor: nw-resize;
+}
+
+.topRightControlLine {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7%;
+    height: 7%;
+    max-width: 20px;
+    max-height: 20px;
+    cursor: ne-resize;
+}
+
+.bottomLeftControlLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 7%;
+    height: 7%;
+    max-width: 20px;
+    max-height: 20px;
+    cursor: sw-resize;
+}
+
+.bottomRightControlLine {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 7%;
+    height: 7%;
+    max-width: 20px;
+    max-height: 20px;
+    cursor: se-resize;
+}

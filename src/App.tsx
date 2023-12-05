@@ -1,9 +1,6 @@
-import React from "react";
+import "./styles/styles.css";
+import { MainPage } from "./pages/mainPage";
 
-const App = () => {
-  return <div>Работаем</div>;
-};
+const App = () => <MainPage />;
 
 export default App;
-
-// Prettier Ctrl + Alt + Shift + P

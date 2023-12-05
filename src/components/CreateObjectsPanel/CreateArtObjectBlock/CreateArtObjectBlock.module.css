@@ -1,0 +1,20 @@
+.container {
+    margin-top: 20px;
+}
+
+.title {
+    text-align: center;
+}
+
+.previewImagesBlock {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+}
+
+.previewImage {
+    max-height: 25px;
+    max-width: 25px;
+    cursor: pointer;
+}

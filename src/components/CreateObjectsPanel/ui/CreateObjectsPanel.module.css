@@ -1,0 +1,7 @@
+.container {
+    background: white;
+    border: rgb(128 128 128) 2px solid;
+    width: min-content;
+    padding: 0 40px;
+    flex-grow: 1;
+}
