@@ -7,13 +7,13 @@ import { ResizeDirection } from "../ResizeControls/ResizeDirection";
 
 interface ImageProps {
   imageObject: ImageType;
-  onResize: (
+  onInteraction: (
     e: React.MouseEvent<HTMLDivElement>,
     resizeDirection: ResizeDirection,
   ) => void;
 }
 
-const Image = ({ imageObject, onResize }: ImageProps) => {
+const Image = ({ imageObject, onInteraction }: ImageProps) => {
   const canvasSize = useAppSelector((state) => state.canvas);
 
   return (
@@ -29,7 +29,7 @@ const Image = ({ imageObject, onResize }: ImageProps) => {
     >
       <img src={imageObject.imageSrc} className={classes.image} alt={"image"} />
       {imageObject.isSelected ? (
-        <ResizeControls resizeHandler={onResize} />
+        <ResizeControls resizeHandler={onInteraction} />
       ) : null}
     </div>
   );

@@ -8,13 +8,13 @@ import { changeTextObject } from "../model/objectsSlice";
 
 interface TextProps {
   textObject: TextType;
-  onResize: (
+  onInteraction: (
     e: React.MouseEvent<HTMLDivElement>,
     resizeDirection: ResizeDirection,
   ) => void;
 }
 
-const Text = ({ textObject, onResize }: TextProps) => {
+const Text = ({ textObject, onInteraction }: TextProps) => {
   const canvasSize = useAppSelector((state) => state.canvas);
   const dispatch = useAppDispatch();
 
@@ -74,7 +74,7 @@ const Text = ({ textObject, onResize }: TextProps) => {
         }}
       />
       {textObject.isSelected ? (
-        <ResizeControls resizeHandler={onResize} />
+        <ResizeControls resizeHandler={onInteraction} />
       ) : null}
     </div>
   );

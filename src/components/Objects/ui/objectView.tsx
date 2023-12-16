@@ -28,19 +28,19 @@ const ObjectView = ({
   multiplySelect,
 }: ObjectProps): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const canvasSize = useAppSelector((state) => state.canvas);
-
-  const handleInteraction = useObjectInteraction({
-    object,
-    canvasSize,
-    multiplySelect,
+  const allObjects = useAppSelector((state) => state.objects);
+  const onInteraction = useObjectInteraction({
+    currentObject: object,
+    otherObjects: allObjects.filter((curObject) => {
+      return curObject.isSelected && object.id !== curObject.id;
+    }),
+    canvasSize: useAppSelector((state) => state.canvas),
     dispatch,
   });
-
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     if (object.isSelected) {
-      handleInteraction.handleMouseDown(e);
+      onInteraction(e);
       return;
     }
 
@@ -59,24 +59,15 @@ const ObjectView = ({
   let element: React.ReactElement = <></>;
   if (isTextType(object)) {
     element = (
-      <Text
-        textObject={object as TextType}
-        onResize={handleInteraction.handleMouseDown}
-      />
+      <Text textObject={object as TextType} onInteraction={onInteraction} />
     );
   } else if (isImageType(object)) {
     element = (
-      <Image
-        imageObject={object as ImageType}
-        onResize={handleInteraction.handleMouseDown}
-      />
+      <Image imageObject={object as ImageType} onInteraction={onInteraction} />
     );
   } else if (isArtType(object)) {
     element = (
-      <ArtObject
-        artObject={object as ArtType}
-        onResize={handleInteraction.handleMouseDown}
-      />
+      <ArtObject artObject={object as ArtType} onInteraction={onInteraction} />
     );
   }
 

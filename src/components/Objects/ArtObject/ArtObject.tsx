@@ -7,13 +7,13 @@ import ResizeControls from "../ResizeControls/ResizeControls";
 
 interface ArtObjectProps {
   artObject: ArtType;
-  onResize: (
+  onInteraction: (
     e: React.MouseEvent<HTMLDivElement>,
     resizeDirection: ResizeDirection,
   ) => void;
 }
 
-const ArtObject = ({ artObject, onResize }: ArtObjectProps) => {
+const ArtObject = ({ artObject, onInteraction }: ArtObjectProps) => {
   const canvasSize = useAppSelector((state) => state.canvas);
 
   return (
@@ -30,7 +30,7 @@ const ArtObject = ({ artObject, onResize }: ArtObjectProps) => {
     >
       <img src={artObject.objectSrc} className={classes.artObject} />
       {artObject.isSelected ? (
-        <ResizeControls resizeHandler={onResize} />
+        <ResizeControls resizeHandler={onInteraction} />
       ) : null}
     </div>
   );

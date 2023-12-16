@@ -4,24 +4,149 @@ import { useAppDispatch } from "../redux/hooks";
 import { ResizeDirection } from "../components/Objects/ResizeControls/ResizeDirection";
 import { changeBoundingBox } from "../components/Objects/model/objectsSlice";
 
+const topResize = (
+  oldScaleY: number,
+  deltaY: number,
+  oldPosY: number,
+): [number, number] => {
+  let newScaleY: number = oldScaleY;
+  let newPosY: number = oldPosY;
+  const scaleY = oldScaleY - deltaY;
+  if (
+    scaleY > 0.05 &&
+    scaleY < 1 &&
+    oldPosY + deltaY > 0 &&
+    oldPosY + deltaY < 1
+  ) {
+    newScaleY = scaleY;
+    newPosY = oldPosY + deltaY;
+  }
+  return [newScaleY, newPosY];
+};
+const bottomResize = (
+  oldScaleY: number,
+  deltaY: number,
+  oldPosY: number,
+): [number, number] => {
+  let newScaleY: number = oldScaleY;
+  const scaleY = oldScaleY + deltaY;
+  if (
+    scaleY > 0.05 &&
+    scaleY < 1 &&
+    oldPosY + scaleY > 0 &&
+    oldPosY + scaleY < 1
+  ) {
+    newScaleY = scaleY;
+  }
+  return [newScaleY, oldPosY];
+};
+
+const rightResize = (
+  oldScaleX: number,
+  deltaX: number,
+  oldPosX: number,
+): [number, number] => {
+  let newScaleX: number = oldScaleX;
+  const scaleX = oldScaleX + deltaX;
+  if (
+    scaleX > 0.05 &&
+    scaleX < 1 &&
+    oldPosX + scaleX > 0 &&
+    oldPosX + scaleX < 1
+  ) {
+    newScaleX = scaleX;
+  }
+  return [newScaleX, oldPosX];
+};
+
+const leftResize = (
+  oldScaleX: number,
+  deltaX: number,
+  oldPosX: number,
+): [number, number] => {
+  let newScaleX: number = oldScaleX;
+  let newPosX: number = oldPosX;
+  const scaleX = oldScaleX - deltaX;
+  if (
+    scaleX > 0.05 &&
+    scaleX < 1 &&
+    oldPosX + deltaX > 0 &&
+    oldPosX + deltaX < 1
+  ) {
+    newScaleX = scaleX;
+    newPosX = oldPosX + deltaX;
+  }
+  return [newScaleX, newPosX];
+};
+
+const resize = (
+  object: ObjectType,
+  deltaX: number,
+  deltaY: number,
+  isResizing: ResizeDirection,
+): BoundingBoxType => {
+  let newScaleX = object.scaleX;
+  let newScaleY = object.scaleY;
+  let newPosX = object.posX;
+  let newPosY = object.posY;
+
+  switch (isResizing) {
+    case "top":
+      [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
+      break;
+    case "bottom":
+      [newScaleY, newPosY] = bottomResize(object.scaleY, deltaY, object.posY);
+      break;
+    case "right":
+      [newScaleX, newPosX] = rightResize(object.scaleX, deltaX, object.posX);
+      break;
+    case "left":
+      [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
+      break;
+    case "top-left":
+      [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
+      [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
+      break;
+    case "top-right":
+      [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
+      [newScaleX, newPosX] = rightResize(object.scaleX, deltaX, object.posX);
+      break;
+    case "bottom-left":
+      [newScaleY, newPosY] = bottomResize(object.scaleY, deltaY, object.posY);
+      [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
+      break;
+    case "bottom-right":
+      [newScaleY, newPosY] = bottomResize(object.scaleY, deltaY, object.posY);
+      [newScaleX, newPosX] = rightResize(object.scaleX, deltaX, object.posX);
+      break;
+  }
+  return {
+    posX: newPosX,
+    posY: newPosY,
+    scaleX: newScaleX,
+    scaleY: newScaleY,
+  };
+};
+
 interface ObjectInteractionProps {
-  object: ObjectType;
+  currentObject: ObjectType;
+  otherObjects: ObjectType[];
   canvasSize: { width: number; height: number };
-  multiplySelect: boolean;
   dispatch: ReturnType<typeof useAppDispatch>;
 }
 
 const useObjectInteraction = ({
-  object,
+  currentObject,
+  otherObjects,
   canvasSize,
-  multiplySelect,
   dispatch,
 }: ObjectInteractionProps) => {
   const [isDragging, setIsDragging] = useState(false);
+
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [dragStartObject, setDragStartObject] = useState({
-    x: object.posX,
-    y: object.posY,
+    x: currentObject.posX,
+    y: currentObject.posY,
   });
   const [isResizing, setIsResizing] = useState<ResizeDirection | null>(null);
 
@@ -41,83 +166,8 @@ const useObjectInteraction = ({
     } else {
       setIsDragging(true);
       setDragStart({ x: event.clientX, y: event.clientY });
-      setDragStartObject({ x: object.posX, y: object.posY });
+      setDragStartObject({ x: currentObject.posX, y: currentObject.posY });
     }
-  };
-
-  const topResize = (
-    oldScaleY: number,
-    deltaY: number,
-    oldPosY: number,
-  ): [number, number] => {
-    let newScaleY: number = oldScaleY;
-    let newPosY: number = oldPosY;
-    const scaleY = oldScaleY - deltaY;
-    if (
-      scaleY > 0.05 &&
-      scaleY < 1 &&
-      oldPosY + deltaY > 0 &&
-      oldPosY + deltaY < 1
-    ) {
-      newScaleY = scaleY;
-      newPosY = oldPosY + deltaY;
-    }
-    return [newScaleY, newPosY];
-  };
-  const bottomResize = (
-    oldScaleY: number,
-    deltaY: number,
-    oldPosY: number,
-  ): [number, number] => {
-    let newScaleY: number = oldScaleY;
-    const scaleY = oldScaleY + deltaY;
-    if (
-      scaleY > 0.05 &&
-      scaleY < 1 &&
-      oldPosY + scaleY > 0 &&
-      oldPosY + scaleY < 1
-    ) {
-      newScaleY = scaleY;
-    }
-    return [newScaleY, oldPosY];
-  };
-
-  const rightResize = (
-    oldScaleX: number,
-    deltaX: number,
-    oldPosX: number,
-  ): [number, number] => {
-    let newScaleX: number = oldScaleX;
-    const scaleX = oldScaleX + deltaX;
-    if (
-      scaleX > 0.05 &&
-      scaleX < 1 &&
-      oldPosX + scaleX > 0 &&
-      oldPosX + scaleX < 1
-    ) {
-      newScaleX = scaleX;
-    }
-    return [newScaleX, oldPosX];
-  };
-
-  const leftResize = (
-    oldScaleX: number,
-    deltaX: number,
-    oldPosX: number,
-  ): [number, number] => {
-    let newScaleX: number = oldScaleX;
-    let newPosX: number = oldPosX;
-    const scaleX = oldScaleX - deltaX;
-    if (
-      scaleX > 0.05 &&
-      scaleX < 1 &&
-      oldPosX + deltaX > 0 &&
-      oldPosX + deltaX < 1
-    ) {
-      newScaleX = scaleX;
-      newPosX = oldPosX + deltaX;
-    }
-    return [newScaleX, newPosX];
   };
 
   const handleMouseMove = (event: MouseEvent) => {
@@ -129,18 +179,36 @@ const useObjectInteraction = ({
       const posY = dragStartObject.y + deltaY;
 
       const boundingBox: BoundingBoxType = {
-        posX: clamp(posX, 0, 1, object.scaleX),
-        posY: clamp(posY, 0, 1, object.scaleY),
-        scaleX: object.scaleX,
-        scaleY: object.scaleY,
+        posX: clamp(posX, 0, 1, currentObject.scaleX),
+        posY: clamp(posY, 0, 1, currentObject.scaleY),
+        scaleX: currentObject.scaleX,
+        scaleY: currentObject.scaleY,
       };
 
       dispatch(
         changeBoundingBox({
-          objectId: object.id,
+          objectId: currentObject.id,
           boundingBox: boundingBox,
         }),
       );
+      if (!isResizing) {
+        otherObjects.forEach((obj) => {
+          const posX = obj.posX + deltaX;
+          const posY = obj.posY + deltaY;
+          dispatch(
+            changeBoundingBox({
+              objectId: obj.id,
+              boundingBox: {
+                posX: clamp(posX, 0, 1, obj.scaleX),
+                posY: clamp(posY, 0, 1, obj.scaleY),
+                scaleX: obj.scaleX,
+                scaleY: obj.scaleY,
+              },
+            }),
+          );
+        });
+      }
+
       setDragStartObject({ x: boundingBox.posX, y: boundingBox.posY });
       setDragStart({ x: event.clientX, y: event.clientY });
     }
@@ -148,77 +216,10 @@ const useObjectInteraction = ({
       const deltaX = (event.clientX - dragStart.x) / canvasSize.width;
       const deltaY = (event.clientY - dragStart.y) / canvasSize.height;
 
-      let newScaleX = object.scaleX;
-      let newScaleY = object.scaleY;
-      let newPosX = object.posX;
-      let newPosY = object.posY;
-
-      switch (isResizing) {
-        case "top":
-          [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
-          break;
-        case "bottom":
-          [newScaleY, newPosY] = bottomResize(
-            object.scaleY,
-            deltaY,
-            object.posY,
-          );
-          break;
-        case "right":
-          [newScaleX, newPosX] = rightResize(
-            object.scaleX,
-            deltaX,
-            object.posX,
-          );
-          break;
-        case "left":
-          [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
-          break;
-        case "top-left":
-          [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
-          [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
-          break;
-        case "top-right":
-          [newScaleY, newPosY] = topResize(object.scaleY, deltaY, object.posY);
-          [newScaleX, newPosX] = rightResize(
-            object.scaleX,
-            deltaX,
-            object.posX,
-          );
-          break;
-        case "bottom-left":
-          [newScaleY, newPosY] = bottomResize(
-            object.scaleY,
-            deltaY,
-            object.posY,
-          );
-          [newScaleX, newPosX] = leftResize(object.scaleX, deltaX, object.posX);
-          break;
-        case "bottom-right":
-          [newScaleY, newPosY] = bottomResize(
-            object.scaleY,
-            deltaY,
-            object.posY,
-          );
-          [newScaleX, newPosX] = rightResize(
-            object.scaleX,
-            deltaX,
-            object.posX,
-          );
-          break;
-      }
-
-      const boundingBox: BoundingBoxType = {
-        posX: newPosX,
-        posY: newPosY,
-        scaleX: newScaleX,
-        scaleY: newScaleY,
-      };
-
       dispatch(
         changeBoundingBox({
-          objectId: object.id,
-          boundingBox: boundingBox,
+          objectId: currentObject.id,
+          boundingBox: resize(currentObject, deltaX, deltaY, isResizing),
         }),
       );
     }
@@ -243,7 +244,7 @@ const useObjectInteraction = ({
     };
   }, [isDragging, isResizing, handleMouseMove]);
 
-  return { handleMouseDown, handleMouseMove };
+  return handleMouseDown;
 };
 
 export { useObjectInteraction };
