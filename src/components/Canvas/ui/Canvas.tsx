@@ -23,7 +23,7 @@ const Canvas = (props: CanvasProps) => {
       <div
         className={styles.canvas}
         style={{ width: canvasSize.width, height: canvasSize.height }}
-        onClick={() => {
+        onMouseDown={() => {
           dispatch(resetAllSelections());
         }}
       >

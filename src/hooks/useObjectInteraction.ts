@@ -7,12 +7,14 @@ import { changeBoundingBox } from "../components/Objects/model/objectsSlice";
 interface ObjectInteractionProps {
   object: ObjectType;
   canvasSize: { width: number; height: number };
+  multiplySelect: boolean;
   dispatch: ReturnType<typeof useAppDispatch>;
 }
 
 const useObjectInteraction = ({
   object,
   canvasSize,
+  multiplySelect,
   dispatch,
 }: ObjectInteractionProps) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -36,7 +38,6 @@ const useObjectInteraction = ({
   ) => {
     if (resizeDirection) {
       setIsResizing(resizeDirection);
-      //setResizeStart({ x: event.clientX, y: event.clientY });
     } else {
       setIsDragging(true);
       setDragStart({ x: event.clientX, y: event.clientY });

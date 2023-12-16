@@ -19,6 +19,10 @@ const Text = ({ textObject, onResize }: TextProps) => {
   const dispatch = useAppDispatch();
 
   const handleTextChange = (value: string) => {
+    if (!textObject.isSelected) {
+      return;
+    }
+
     dispatch(
       changeTextObject({
         id: textObject.id,
@@ -44,7 +48,7 @@ const Text = ({ textObject, onResize }: TextProps) => {
         height: `${textObject.scaleY * canvasSize.height}px`,
         left: `${textObject.posX * canvasSize.width}px`,
         top: `${textObject.posY * canvasSize.height}px`,
-        border: textObject.isSelected ? "2px solid blue" : "",
+        outline: textObject.isSelected ? "2px solid blue" : "",
       }}
     >
       <input

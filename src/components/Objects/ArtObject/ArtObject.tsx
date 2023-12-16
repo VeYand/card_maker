@@ -25,7 +25,7 @@ const ArtObject = ({ artObject, onResize }: ArtObjectProps) => {
         position: "absolute",
         left: `${artObject.posX * canvasSize.width}px`,
         top: `${artObject.posY * canvasSize.height}px`,
-        border: artObject.isSelected ? "2px solid blue" : "",
+        outline: artObject.isSelected ? "2px solid blue" : "",
       }}
     >
       <img src={artObject.objectSrc} className={classes.artObject} />

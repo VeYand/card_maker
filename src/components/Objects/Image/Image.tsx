@@ -24,7 +24,7 @@ const Image = ({ imageObject, onResize }: ImageProps) => {
         height: `${imageObject.scaleY * canvasSize.height}px`,
         left: `${imageObject.posX * canvasSize.width}px`,
         top: `${imageObject.posY * canvasSize.height}px`,
-        border: imageObject.isSelected ? "2px solid blue" : "",
+        outline: imageObject.isSelected ? "2px solid blue" : "",
       }}
     >
       <img src={imageObject.imageSrc} className={classes.image} alt={"image"} />

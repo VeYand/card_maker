@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ObjectType } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setObjects } from "../components/Objects/model/objectsSlice";
@@ -13,6 +13,24 @@ import classes from "./mainPage.module.css";
 const MainPage = () => {
   const dispatch = useAppDispatch();
   const objects = useAppSelector((state) => state.objects);
+  const [isMultiplySelect, setIsMultiplySelect] = useState(false);
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    setIsMultiplySelect(event.ctrlKey);
+  };
+
+  const handleKeyUp = () => {
+    setIsMultiplySelect(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(setObjects(objectList));
@@ -25,7 +43,13 @@ const MainPage = () => {
         <ToolBar />
         <Canvas>
           {objects.map((object: ObjectType): React.ReactElement => {
-            return <ObjectView key={object.id} object={object} />;
+            return (
+              <ObjectView
+                key={object.id}
+                object={object}
+                multiplySelect={isMultiplySelect}
+              />
+            );
           })}
         </Canvas>
         <CreateObjectsPanel />
