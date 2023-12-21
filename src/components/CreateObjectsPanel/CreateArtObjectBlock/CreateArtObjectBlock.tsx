@@ -2,22 +2,24 @@ import React from "react";
 import classes from "./CreateArtObjectBlock.module.css";
 import { artObjectList } from "./data/ArtObjectList";
 import { useAppDispatch } from "../../../redux/hooks";
-import { addObject } from "../../Objects/model/objectsSlice";
+import { addObjects } from "../../model/cardEditorSlice";
 
 const CreateArtObjectBlock = () => {
   const dispatch = useAppDispatch();
 
   const createArtObject = (src: string) => {
     dispatch(
-      addObject({
-        id: Date.now().toString(),
-        objectSrc: src,
-        isSelected: false,
-        posX: 0,
-        posY: 0,
-        scaleX: 0.2,
-        scaleY: 0.2,
-      }),
+      addObjects([
+        {
+          id: Date.now().toString(),
+          objectSrc: src,
+          isSelected: false,
+          posX: 0,
+          posY: 0,
+          scaleX: 0.2,
+          scaleY: 0.2,
+        },
+      ]),
     );
   };
 

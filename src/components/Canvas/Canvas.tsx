@@ -1,15 +1,15 @@
 import React, { ReactNode } from "react";
 import styles from "./Canvas.module.css";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { resetAllSelections } from "../../Objects/model/objectsSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { resetAllSelections } from "../model/cardEditorSlice";
 
 interface CanvasProps {
   children?: ReactNode;
 }
 
 const Canvas = (props: CanvasProps) => {
-  const canvasSize = useAppSelector((state) => state.canvas);
-  const filter = useAppSelector((state) => state.filter);
+  const canvasSize = useAppSelector((state) => state.cardEditor.canvas);
+  const filter = useAppSelector((state) => state.cardEditor.filter);
   const dispatch = useAppDispatch();
   return (
     <div className={styles.canvasWrapper}>

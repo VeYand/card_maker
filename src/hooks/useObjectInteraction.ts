@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BoundingBoxType, ObjectType } from "../types/types";
-import { useAppDispatch } from "../redux/hooks";
 import { ResizeDirection } from "../components/Objects/ResizeControls/ResizeDirection";
-import { changeBoundingBox } from "../components/Objects/model/objectsSlice";
 
 const topResize = (
   oldScaleY: number,
@@ -132,14 +130,14 @@ interface ObjectInteractionProps {
   currentObject: ObjectType;
   otherObjects: ObjectType[];
   canvasSize: { width: number; height: number };
-  dispatch: ReturnType<typeof useAppDispatch>;
+  changeObject: (newObject: ObjectType) => void;
 }
 
 const useObjectInteraction = ({
   currentObject,
   otherObjects,
   canvasSize,
-  dispatch,
+  changeObject,
 }: ObjectInteractionProps) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -185,27 +183,21 @@ const useObjectInteraction = ({
         scaleY: currentObject.scaleY,
       };
 
-      dispatch(
-        changeBoundingBox({
-          objectId: currentObject.id,
-          boundingBox: boundingBox,
-        }),
-      );
+      changeObject({
+        ...currentObject,
+        ...boundingBox,
+      });
       if (!isResizing) {
         otherObjects.forEach((obj) => {
           const posX = obj.posX + deltaX;
           const posY = obj.posY + deltaY;
-          dispatch(
-            changeBoundingBox({
-              objectId: obj.id,
-              boundingBox: {
-                posX: clamp(posX, 0, 1, obj.scaleX),
-                posY: clamp(posY, 0, 1, obj.scaleY),
-                scaleX: obj.scaleX,
-                scaleY: obj.scaleY,
-              },
-            }),
-          );
+          changeObject({
+            ...obj,
+            posX: clamp(posX, 0, 1, obj.scaleX),
+            posY: clamp(posY, 0, 1, obj.scaleY),
+            scaleX: obj.scaleX,
+            scaleY: obj.scaleY,
+          });
         });
       }
 
@@ -216,12 +208,10 @@ const useObjectInteraction = ({
       const deltaX = (event.clientX - dragStart.x) / canvasSize.width;
       const deltaY = (event.clientY - dragStart.y) / canvasSize.height;
 
-      dispatch(
-        changeBoundingBox({
-          objectId: currentObject.id,
-          boundingBox: resize(currentObject, deltaX, deltaY, isResizing),
-        }),
-      );
+      changeObject({
+        ...currentObject,
+        ...resize(currentObject, deltaX, deltaY, isResizing),
+      });
     }
   };
 

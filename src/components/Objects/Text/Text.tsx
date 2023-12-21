@@ -4,7 +4,7 @@ import classes from "./Text.module.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ResizeControls from "../ResizeControls/ResizeControls";
 import { ResizeDirection } from "../ResizeControls/ResizeDirection";
-import { changeObject } from "../model/objectsSlice";
+import { changeObject } from "../../model/cardEditorSlice";
 
 interface TextProps {
   textObject: TextType;
@@ -15,7 +15,7 @@ interface TextProps {
 }
 
 const Text = ({ textObject, onInteraction }: TextProps) => {
-  const canvasSize = useAppSelector((state) => state.canvas);
+  const canvasSize = useAppSelector((state) => state.cardEditor.canvas);
   const dispatch = useAppDispatch();
 
   const handleTextChange = (value: string) => {

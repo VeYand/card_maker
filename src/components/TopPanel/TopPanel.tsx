@@ -5,9 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleJSONLoad, saveAsJson } from "./model/actionHadlers";
 import TopButton from "./TopButton/TopButton";
 import { CardDataType } from "../../types/types";
-import { setFilter } from "../RightPanel/FilterBlock/model/filterSlice";
-import { setCanvasSize } from "../Canvas/model/canvasSlice";
-import { setObjects } from "../Objects/model/objectsSlice";
+import { setCanvasSize, setFilter, setObjects } from "../model/cardEditorSlice";
 import { hideNotification, showNotification } from "./model/notificationSlice";
 
 type CanvasActionType = "Current Window" | "New Window";
@@ -17,9 +15,10 @@ const canvasActions: CanvasActionType[] = ["Current Window", "New Window"];
 const saveActions: SaveActionType[] = ["JPEG", "PNG", "JSON"];
 
 const TopPanel = () => {
-  const objectData = useAppSelector((state) => state.objects);
-  const filterData = useAppSelector((state) => state.filter);
-  const canvasData = useAppSelector((state) => state.canvas);
+  const cardEditorState = useAppSelector((state) => state.cardEditor);
+  const objectData = cardEditorState.objects;
+  const filterData = cardEditorState.filter;
+  const canvasData = cardEditorState.canvas;
   const notificationData = useAppSelector((state) => state.notification);
   const jsonInputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();

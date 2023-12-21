@@ -5,7 +5,7 @@ import {
   moveBackground,
   moveForeground,
   removeObjects,
-} from "../../Objects/model/objectsSlice";
+} from "../../model/cardEditorSlice";
 import {
   isArtType,
   isImageType,
@@ -26,7 +26,7 @@ import {
 } from "./data/fontData";
 
 const ToolBlock = () => {
-  const objects = useAppSelector((state) => state.objects);
+  const objects = useAppSelector((state) => state.cardEditor.objects);
   const dispatch = useAppDispatch();
   const selectedObjects = objects.filter((object: ObjectType) => {
     return object.isSelected;

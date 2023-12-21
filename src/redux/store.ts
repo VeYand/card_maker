@@ -1,13 +1,9 @@
 import { combineReducers, createStore } from "redux";
-import { objectsReducer } from "../components/Objects/model/objectsSlice";
-import { canvasReducer } from "../components/Canvas/model/canvasSlice";
-import { filterReducer } from "../components/RightPanel/FilterBlock/model/filterSlice";
+import { cardEditorReducer } from "../components/model/cardEditorSlice";
 import { notificationReducer } from "../components/TopPanel/model/notificationSlice";
 
 const rootReducer = combineReducers({
-  objects: objectsReducer,
-  canvas: canvasReducer,
-  filter: filterReducer,
+  cardEditor: cardEditorReducer,
   notification: notificationReducer,
 });
 

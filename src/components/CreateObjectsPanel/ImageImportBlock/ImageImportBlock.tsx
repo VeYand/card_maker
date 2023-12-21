@@ -1,11 +1,11 @@
 import React from "react";
 import { ImageType } from "../../../types/types";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addObject } from "../../Objects/model/objectsSlice";
+import { addObjects } from "../../model/cardEditorSlice";
 import classes from "./ImageImportBlock.module.css";
 
 const ImageImportBlock = () => {
-  const canvasSize = useAppSelector((state) => state.canvas);
+  const canvasSize = useAppSelector((state) => state.cardEditor.canvas);
   const dispatch = useAppDispatch();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +47,7 @@ const ImageImportBlock = () => {
               : width / canvasSize.height,
         };
 
-        dispatch(addObject(imageObject));
+        dispatch(addObjects([imageObject]));
       };
     };
     reader.readAsDataURL(file);

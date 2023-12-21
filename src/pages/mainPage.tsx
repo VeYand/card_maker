@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { ObjectType } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setObjects } from "../components/Objects/model/objectsSlice";
+import { setObjects } from "../components/model/cardEditorSlice";
 import { objectList } from "../data/data";
 import TopPanel from "../components/TopPanel/TopPanel";
 import ToolBar from "../components/CreateObjectsPanel/ui/CreateObjectsPanel";
-import Canvas from "../components/Canvas/ui/Canvas";
+import Canvas from "../components/Canvas/Canvas";
 import { ObjectView } from "../components/Objects/ui/objectView";
 import { CreateObjectsPanel } from "../components/RightPanel/ui/CreateObjectsPanel";
 import classes from "./mainPage.module.css";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
-  const objects = useAppSelector((state) => state.objects);
+  const objects = useAppSelector((state) => state.cardEditor.objects);
   const [isMultiplySelect, setIsMultiplySelect] = useState(false);
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -58,4 +58,4 @@ const MainPage = () => {
   );
 };
 
-export { MainPage };
+export {MainPage};

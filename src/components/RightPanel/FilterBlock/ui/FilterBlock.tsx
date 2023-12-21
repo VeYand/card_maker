@@ -1,11 +1,11 @@
 import React from "react";
 import classes from "./FilterBlock.module.css";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setFilter } from "../model/filterSlice";
+import { setFilter } from "../../../model/cardEditorSlice";
 import { Color, colorList } from "../data/templateColors";
 
 const FilterBlock = () => {
-  const filter = useAppSelector((state) => state.filter);
+  const filter = useAppSelector((state) => state.cardEditor.filter);
   const dispatch = useAppDispatch();
 
   const changeColor = (color: "r" | "g" | "b" | "a", value: number) => {

@@ -14,7 +14,7 @@ interface ImageProps {
 }
 
 const Image = ({ imageObject, onInteraction }: ImageProps) => {
-  const canvasSize = useAppSelector((state) => state.canvas);
+  const canvasSize = useAppSelector((state) => state.cardEditor.canvas);
 
   return (
     <div
