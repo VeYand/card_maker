@@ -38,7 +38,6 @@ const notificationReducer = (
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return {
-        ...state,
         message: action.payload,
         isVisible: true,
       };

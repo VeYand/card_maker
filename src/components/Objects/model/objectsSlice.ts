@@ -2,7 +2,6 @@ import {
   BoundingBoxType,
   ObjectListType,
   ObjectType,
-  TextType,
 } from "../../../types/types";
 
 const SET_OBJECTS = "SET_OBJECTS";
@@ -10,10 +9,10 @@ const ADD_OBJECT = "ADD_OBJECT";
 const CHANGE_BOUNDING_BOX = "CHANGE_BOUNDING_BOX";
 const CHANGE_OBJECT_IS_SELECTED = "CHANGE_OBJECT_IS_SELECTED";
 const RESET_ALL_SELECTIONS = "RESET_ALL_SELECTIONS";
-const CHANGE_TEXT_OBJECT = "CHANGE_TEXT_OBJECT";
 const REMOVE_OBJECTS = "REMOVE_OBJECTS";
 const MOVE_BACKGROUND = "MOVE_BACKGROUND";
 const MOVE_FOREGROUND = "MOVE_FOREGROUND";
+const CHANGE_OBJECT = "CHANGE_OBJECT";
 
 interface SetObjectsAction {
   type: typeof SET_OBJECTS;
@@ -45,11 +44,6 @@ interface ResetAllSelectionsAction {
   type: typeof RESET_ALL_SELECTIONS;
 }
 
-interface ChangeTextObjectAction {
-  type: typeof CHANGE_TEXT_OBJECT;
-  payload: TextType;
-}
-
 interface RemoveObjectsAction {
   type: typeof REMOVE_OBJECTS;
   payload: ObjectListType;
@@ -65,39 +59,44 @@ interface MoveForegroundAction {
   payload: ObjectListType;
 }
 
+interface ChangeObjectAction {
+  type: typeof CHANGE_OBJECT;
+  payload: ObjectType;
+}
+
 type ObjectsAction =
   | SetObjectsAction
   | AddObjectAction
   | ChangeBoundingBoxAction
   | ChangeObjectIsSelectedAction
   | ResetAllSelectionsAction
-  | ChangeTextObjectAction
   | RemoveObjectsAction
   | MoveBackgroundAction
-  | MoveForegroundAction;
+  | MoveForegroundAction
+  | ChangeObjectAction;
 
-const setObjects = (payload: ObjectListType): SetObjectsAction => ({
+const setObjects = (
+  payload: SetObjectsAction["payload"],
+): SetObjectsAction => ({
   type: SET_OBJECTS,
   payload,
 });
 
-const addObject = (payload: ObjectType): AddObjectAction => ({
+const addObject = (payload: AddObjectAction["payload"]): AddObjectAction => ({
   type: ADD_OBJECT,
   payload,
 });
 
-const changeBoundingBox = (payload: {
-  objectId: string;
-  boundingBox: BoundingBoxType;
-}): ChangeBoundingBoxAction => ({
+const changeBoundingBox = (
+  payload: ChangeBoundingBoxAction["payload"],
+): ChangeBoundingBoxAction => ({
   type: CHANGE_BOUNDING_BOX,
   payload,
 });
 
-const changeObjectIsSelected = (payload: {
-  objectId: string;
-  isSelected: boolean;
-}): ChangeObjectIsSelectedAction => ({
+const changeObjectIsSelected = (
+  payload: ChangeObjectIsSelectedAction["payload"],
+): ChangeObjectIsSelectedAction => ({
   type: CHANGE_OBJECT_IS_SELECTED,
   payload,
 });
@@ -106,23 +105,31 @@ const resetAllSelections = (): ResetAllSelectionsAction => ({
   type: RESET_ALL_SELECTIONS,
 });
 
-const changeTextObject = (payload: TextType): ChangeTextObjectAction => ({
-  type: CHANGE_TEXT_OBJECT,
-  payload,
-});
-
-const removeObjects = (payload: ObjectListType): RemoveObjectsAction => ({
+const removeObjects = (
+  payload: RemoveObjectsAction["payload"],
+): RemoveObjectsAction => ({
   type: REMOVE_OBJECTS,
   payload,
 });
 
-const moveBackground = (payload: ObjectListType): MoveBackgroundAction => ({
+const moveBackground = (
+  payload: MoveBackgroundAction["payload"],
+): MoveBackgroundAction => ({
   type: MOVE_BACKGROUND,
   payload,
 });
 
-const moveForeground = (payload: ObjectListType): MoveForegroundAction => ({
+const moveForeground = (
+  payload: MoveForegroundAction["payload"],
+): MoveForegroundAction => ({
   type: MOVE_FOREGROUND,
+  payload,
+});
+
+const changeObject = (
+  payload: ChangeObjectAction["payload"],
+): ChangeObjectAction => ({
+  type: CHANGE_OBJECT,
   payload,
 });
 
@@ -185,7 +192,7 @@ const objectsReducer = (
         ...object,
         isSelected: false,
       }));
-    case CHANGE_TEXT_OBJECT:
+    case CHANGE_OBJECT:
       return state.map((object: ObjectType) =>
         object.id === action.payload.id ? action.payload : object,
       );
@@ -212,7 +219,7 @@ export {
   changeBoundingBox,
   changeObjectIsSelected,
   resetAllSelections,
-  changeTextObject,
+  changeObject,
   removeObjects,
   moveBackground,
   moveForeground,

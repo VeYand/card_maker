@@ -4,7 +4,7 @@ import classes from "./Text.module.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ResizeControls from "../ResizeControls/ResizeControls";
 import { ResizeDirection } from "../ResizeControls/ResizeDirection";
-import { changeTextObject } from "../model/objectsSlice";
+import { changeObject } from "../model/objectsSlice";
 
 interface TextProps {
   textObject: TextType;
@@ -24,7 +24,7 @@ const Text = ({ textObject, onInteraction }: TextProps) => {
     }
 
     dispatch(
-      changeTextObject({
+      changeObject({
         id: textObject.id,
         posX: textObject.posX,
         posY: textObject.posY,

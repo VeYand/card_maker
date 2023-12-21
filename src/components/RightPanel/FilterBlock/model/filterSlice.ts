@@ -28,7 +28,6 @@ const filterReducer = (
   switch (action.type) {
     case SET_FILTER:
       return {
-        ...state,
         r: action.payload.r,
         g: action.payload.g,
         b: action.payload.b,

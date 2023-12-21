@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
-  changeTextObject,
+  changeObject,
   moveBackground,
   moveForeground,
   removeObjects,
@@ -55,7 +55,7 @@ const ToolBlock = () => {
 
   const changeTextColor = (newColor: FontColorType) => {
     dispatch(
-      changeTextObject({
+      changeObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -73,7 +73,7 @@ const ToolBlock = () => {
 
   const changeTextSize = (newSize: FontSizeType) => {
     dispatch(
-      changeTextObject({
+      changeObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -91,7 +91,7 @@ const ToolBlock = () => {
 
   const changeTextFontFamily = (newFontFamily: FontFamilyType) => {
     dispatch(
-      changeTextObject({
+      changeObject({
         id: selectedObject.id,
         posX: selectedObject.posX,
         posY: selectedObject.posY,
@@ -111,7 +111,7 @@ const ToolBlock = () => {
     const oldDecorations = (selectedObject as TextType).decorations;
     if (!oldDecorations.includes(newTextDecoration)) {
       dispatch(
-        changeTextObject({
+        changeObject({
           id: selectedObject.id,
           posX: selectedObject.posX,
           posY: selectedObject.posY,
@@ -132,7 +132,7 @@ const ToolBlock = () => {
     const oldDecorations = (selectedObject as TextType).decorations;
     if (oldDecorations.includes(decoration)) {
       dispatch(
-        changeTextObject({
+        changeObject({
           id: selectedObject.id,
           posX: selectedObject.posX,
           posY: selectedObject.posY,
