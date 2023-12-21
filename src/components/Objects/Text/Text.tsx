@@ -68,6 +68,7 @@ const Text = ({ textObject, onInteraction }: TextProps) => {
             ? "underline"
             : "none",
         }}
+        placeholder={textObject.content === "" ? "Введите текст" : undefined}
         onChange={(e) => handleTextChange(e.target.value)}
         onBlur={() => {
           console.log("Text edited");

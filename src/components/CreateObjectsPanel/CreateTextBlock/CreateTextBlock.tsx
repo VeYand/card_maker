@@ -14,7 +14,7 @@ const CreateTextBlock = () => {
       posY: 0,
       scaleX: 0.2,
       scaleY: 0.2,
-      content: "Ваш текст",
+      content: "",
       fontColor: "black",
       fontSize: 20,
       fontFamily: "Arial",
