@@ -5,7 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleJSONLoad, saveAsJson } from "./model/actionHadlers";
 import TopButton from "./TopButton/TopButton";
 import { CardDataType } from "../../types/types";
-import { setCanvasSize, setFilter, setObjects } from "../model/cardEditorSlice";
+import {
+  redo,
+  setCanvasSize,
+  setFilter,
+  setObjects,
+  undo,
+} from "../model/cardEditorSlice";
 import { hideNotification, showNotification } from "./model/notificationSlice";
 
 type CanvasActionType = "Current Window" | "New Window";
@@ -81,6 +87,14 @@ const TopPanel = () => {
     }
   };
 
+  function handleUndo() {
+    dispatch(undo());
+  }
+
+  function handleRedo() {
+    dispatch(redo());
+  }
+
   return (
     <>
       <div
@@ -109,6 +123,8 @@ const TopPanel = () => {
           style={{ display: "none" }}
         />
         <TopButton onClick={handleLoadAction}>Load json</TopButton>
+        <TopButton onClick={handleUndo}>Undo</TopButton>
+        <TopButton onClick={handleRedo}>Redo</TopButton>
       </div>
     </>
   );

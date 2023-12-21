@@ -12,7 +12,11 @@ import { Text } from "../Text/Text";
 import { Image } from "../Image/Image";
 import { ArtObject } from "../ArtObject/ArtObject";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { changeObject, resetAllSelections } from "../../model/cardEditorSlice";
+import {
+  changeObject,
+  resetAllSelections,
+  saveState,
+} from "../../model/cardEditorSlice";
 import { useObjectInteraction } from "../../../hooks/useObjectInteraction";
 
 interface ObjectProps {
@@ -39,8 +43,15 @@ const ObjectView = ({
     canvasSize: useAppSelector((state) => state.cardEditor.canvas),
     changeObject: changeObjectHandler,
   });
+
+  const handleMouseUp = () => {
+    window.removeEventListener("mouseup", handleMouseUp);
+    dispatch(saveState());
+  };
+
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
+    window.addEventListener("mouseup", handleMouseUp);
     if (object.isSelected) {
       onInteraction(e);
       return;
@@ -80,4 +91,4 @@ const ObjectView = ({
   );
 };
 
-export {ObjectView};
+export { ObjectView };

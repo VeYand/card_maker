@@ -4,6 +4,7 @@ import {
   ObjectListType,
   ObjectType,
 } from "../../types/types";
+import { createHistory } from "./history";
 
 const SET_CANVAS_SIZE = "SET_CANVAS_SIZE";
 const SET_FILTER = "SET_FILTER";
@@ -14,6 +15,9 @@ const REMOVE_OBJECTS = "REMOVE_OBJECTS";
 const RESET_ALL_SELECTIONS = "RESET_ALL_SELECTIONS";
 const MOVE_BACKGROUND = "MOVE_BACKGROUND";
 const MOVE_FOREGROUND = "MOVE_FOREGROUND";
+const UNDO = "UNDO";
+const REDO = "REDO";
+const SAVE_STATE = "SAVE_STATE";
 
 interface ISetCanvasSizeAction {
   type: typeof SET_CANVAS_SIZE;
@@ -63,6 +67,18 @@ interface ICardEditorState {
   canvas: CanvasType;
   objects: ObjectListType;
   filter: FilterType;
+}
+
+interface IUndoAction {
+  type: typeof UNDO;
+}
+
+interface IRedoAction {
+  type: typeof REDO;
+}
+
+interface ISaveStateAction {
+  type: typeof SAVE_STATE;
 }
 
 const setCanvasSize = (
@@ -123,6 +139,18 @@ const changeObject = (
   payload,
 });
 
+const undo = (): IUndoAction => ({
+  type: UNDO,
+});
+
+const redo = (): IRedoAction => ({
+  type: REDO,
+});
+
+const saveState = (): ISaveStateAction => ({
+  type: SAVE_STATE,
+});
+
 const moveObjects = (
   objects: ObjectListType,
   objectsToMove: ObjectListType,
@@ -161,6 +189,8 @@ const initialState: ICardEditorState = {
   },
 };
 
+const history = createHistory<ICardEditorState>(initialState);
+
 type CardEditorActionType =
   | ISetCanvasSizeAction
   | ISetFilterAction
@@ -170,13 +200,19 @@ type CardEditorActionType =
   | IRemoveObjectsAction
   | IResetAllSelectionsAction
   | IMoveBackgroundAction
-  | IMoveForegroundAction;
+  | IMoveForegroundAction
+  | IRedoAction
+  | IUndoAction
+  | ISaveStateAction;
 
 const cardEditorReducer = (
   state = initialState,
   action: CardEditorActionType,
 ) => {
   let objectsToRemove: Set<string>;
+  let prevState: ICardEditorState | null;
+  let nextState: ICardEditorState | null;
+  let newState: ICardEditorState;
   switch (action.type) {
     case SET_CANVAS_SIZE:
       return {
@@ -197,20 +233,26 @@ const cardEditorReducer = (
         },
       };
     case SET_OBJECTS:
-      return { ...state, objects: action.payload };
+      newState = { ...state, objects: action.payload };
+      history.addHistoryItem(newState);
+      return newState;
     case ADD_OBJECTS:
-      return {
+      newState = {
         ...state,
         objects: [...state.objects, ...action.payload],
       };
+      history.addHistoryItem(newState);
+      return newState;
     case RESET_ALL_SELECTIONS:
-      return {
+      newState = {
         ...state,
         objects: state.objects.map((object: ObjectType) => ({
           ...object,
           isSelected: false,
         })),
       };
+      history.addHistoryItem(newState);
+      return newState;
     case CHANGE_OBJECT:
       return {
         ...state,
@@ -222,22 +264,37 @@ const cardEditorReducer = (
       objectsToRemove = new Set(
         action.payload.map((obj: ObjectType) => obj.id),
       );
-      return {
+      newState = {
         ...state,
         objects: state.objects.filter(
           (object: ObjectType) => !objectsToRemove.has(object.id),
         ),
       };
+      history.addHistoryItem(newState);
+      return newState;
     case MOVE_BACKGROUND:
-      return {
+      newState = {
         ...state,
         objects: moveObjects(state.objects, action.payload, -1),
       };
+      history.addHistoryItem(newState);
+      return newState;
     case MOVE_FOREGROUND:
-      return {
+      newState = {
         ...state,
         objects: moveObjects(state.objects, action.payload, 1),
       };
+      history.addHistoryItem(newState);
+      return newState;
+    case UNDO:
+      prevState = history.undo();
+      return prevState === null ? state : prevState;
+    case REDO:
+      nextState = history.redo();
+      return nextState === null ? state : nextState;
+    case SAVE_STATE:
+      history.addHistoryItem(state);
+      return state;
     default:
       return state;
   }
@@ -254,4 +311,7 @@ export {
   removeObjects,
   setCanvasSize,
   setObjects,
+  undo,
+  redo,
+  saveState,
 };

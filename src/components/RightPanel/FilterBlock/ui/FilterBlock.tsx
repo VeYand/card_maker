@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./FilterBlock.module.css";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setFilter } from "../../../model/cardEditorSlice";
+import { saveState, setFilter } from "../../../model/cardEditorSlice";
 import { Color, colorList } from "../data/templateColors";
 
 const FilterBlock = () => {
@@ -28,6 +28,7 @@ const FilterBlock = () => {
         a: color.a,
       }),
     );
+    dispatch(saveState());
   };
 
   return (
@@ -42,6 +43,7 @@ const FilterBlock = () => {
           max="255"
           value={filter.r}
           onChange={(e) => changeColor("r", Number(e.target.value))}
+          onMouseUp={() => dispatch(saveState())}
         />
       </div>
       <div className={classes.rangeInline}>
@@ -53,6 +55,7 @@ const FilterBlock = () => {
           max="255"
           value={filter.g}
           onChange={(e) => changeColor("g", Number(e.target.value))}
+          onMouseUp={() => dispatch(saveState())}
         />
       </div>
       <div className={classes.rangeInline}>
@@ -64,6 +67,7 @@ const FilterBlock = () => {
           max="255"
           value={filter.b}
           onChange={(e) => changeColor("b", Number(e.target.value))}
+          onMouseUp={() => dispatch(saveState())}
         />
       </div>
       <div className={classes.rangeInline}>
@@ -75,6 +79,7 @@ const FilterBlock = () => {
           max="100"
           value={filter.a * 100}
           onChange={(e) => changeColor("a", Number(e.target.value) / 100)}
+          onMouseUp={() => dispatch(saveState())}
         />
       </div>
 
