@@ -51,7 +51,7 @@ const Text = ({ textObject, onInteraction }: TextProps) => {
         outline: textObject.isSelected ? "2px solid blue" : "",
       }}
     >
-      <input
+      <textarea
         value={textObject.content}
         className={classes.text}
         style={{

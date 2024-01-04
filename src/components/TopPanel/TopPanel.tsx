@@ -13,10 +13,10 @@ import {
   undo,
 } from "../model/cardEditorSlice";
 import { hideNotification, showNotification } from "./model/notificationSlice";
+import html2canvas from "html2canvas";
 
 type CanvasActionType = "Current Window" | "New Window";
 type SaveActionType = "JPEG" | "PNG" | "JSON";
-// type LoadActionType = "JSON";
 const canvasActions: CanvasActionType[] = ["Current Window", "New Window"];
 const saveActions: SaveActionType[] = ["JPEG", "PNG", "JSON"];
 
@@ -54,13 +54,47 @@ const TopPanel = () => {
     }
   };
 
+  const saveCanvasImage = (format: "JPEG" | "PNG") => {
+    const canvas = document.getElementById(
+      "canvas",
+    ) as HTMLCanvasElement | null;
+    if (canvas) {
+      html2canvas(canvas, {
+        useCORS: true,
+      })
+        .then((canvasSnapshot) => {
+          const link = document.createElement("a");
+          switch (format) {
+            case "JPEG":
+              link.href = canvasSnapshot.toDataURL("image/jpeg");
+              break;
+            case "PNG":
+              link.href = canvasSnapshot.toDataURL("image/png");
+              break;
+            default:
+              link.href = canvasSnapshot.toDataURL("image/png");
+              break;
+          }
+
+          link.download = "canvas_image." + format;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          showMessage("Saved successfully");
+        })
+        .catch(() => {
+          showMessage("Failed to save");
+        });
+    }
+  };
+
   const handleSaveAction = (action: SaveActionType) => {
     switch (action) {
       case "JPEG":
-        console.log(action);
+        saveCanvasImage(action);
         break;
       case "PNG":
-        console.log(action);
+        saveCanvasImage(action);
         break;
       case "JSON":
         saveAsJson(data, showMessage);

@@ -23,6 +23,4 @@ const useIsMultiplySelect = () => {
   return isMultiplySelect;
 };
 
-export {
-  useIsMultiplySelect
-}
+export { useIsMultiplySelect };

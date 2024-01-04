@@ -84,11 +84,7 @@ const ObjectView = ({
     );
   }
 
-  return (
-    <div>
-      <div onMouseDown={handleMouseDown}>{element}</div>
-    </div>
-  );
+  return <div onMouseDown={handleMouseDown}>{element}</div>;
 };
 
 export { ObjectView };

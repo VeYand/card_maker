@@ -1,26 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ObjectType } from "../types/types";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setObjects } from "../components/model/cardEditorSlice";
-import { objectList } from "../data/data";
+import { useAppSelector } from "../redux/hooks";
 import TopPanel from "../components/TopPanel/TopPanel";
 import ToolBar from "../components/CreateObjectsPanel/ui/CreateObjectsPanel";
 import Canvas from "../components/Canvas/Canvas";
 import { ObjectView } from "../components/Objects/ui/objectView";
 import { CreateObjectsPanel } from "../components/RightPanel/ui/CreateObjectsPanel";
 import classes from "./mainPage.module.css";
-import {useIsMultiplySelect} from "../hooks/useIsMultiplySelect";
-import {useUndoRedoListeners} from "../hooks/useUndoRedoListeners";
+import { useIsMultiplySelect } from "../hooks/useIsMultiplySelect";
+import { useUndoRedoListeners } from "../hooks/useUndoRedoListeners";
 
 const MainPage = () => {
-  const dispatch = useAppDispatch();
   const objects = useAppSelector((state) => state.cardEditor.objects);
   const isMultiplySelect = useIsMultiplySelect();
   useUndoRedoListeners();
-
-  useEffect(() => {
-    dispatch(setObjects(objectList));
-  }, []);
 
   return (
     <div>

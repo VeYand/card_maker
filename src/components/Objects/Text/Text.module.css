@@ -10,4 +10,6 @@
     border: none;
     background: none;
     outline: none !important;
+    resize: none;
+    overflow: hidden;
 }

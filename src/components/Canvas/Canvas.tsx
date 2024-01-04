@@ -21,6 +21,7 @@ const Canvas = (props: CanvasProps) => {
         {props.children}
       </canvas>
       <div
+        id="canvas"
         className={styles.canvas}
         style={{ width: canvasSize.width, height: canvasSize.height }}
         onMouseDown={() => {
