@@ -1,0 +1,9 @@
+.topButton {
+    background: #c1c2c3ff;
+    border: 1px solid #b4b4b4;
+    cursor: pointer;
+    padding: 2px;
+    font-family: "Anonymous Pro", serif;
+    font-size: 15px;
+    text-align: center;
+}

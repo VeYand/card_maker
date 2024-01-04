@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from "redux";
-import { cardEditorReducer } from "../components/model/cardEditorSlice";
+import { cardEditorReducer } from "../model/cardEditorSlice";
 import { notificationReducer } from "../components/TopPanel/model/notificationSlice";
 
 const rootReducer = combineReducers({

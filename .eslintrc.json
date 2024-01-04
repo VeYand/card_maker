@@ -17,7 +17,9 @@
       "tsx": true
     }
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
     "no-duplicate-imports": "error",
     "no-self-compare": "error",

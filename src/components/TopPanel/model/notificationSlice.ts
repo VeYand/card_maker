@@ -1,3 +1,13 @@
+interface NotificationState {
+  message: string;
+  isVisible: boolean;
+}
+
+const initialState: NotificationState = {
+  message: "string",
+  isVisible: false,
+};
+
 const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
 const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
 
@@ -18,16 +28,6 @@ const showNotification = (message: string): ShowNotificationAction => ({
 const hideNotification = (): HideNotificationAction => ({
   type: HIDE_NOTIFICATION,
 });
-
-interface NotificationState {
-  message: string;
-  isVisible: boolean;
-}
-
-const initialState: NotificationState = {
-  message: "string",
-  isVisible: false,
-};
 
 type NotificationAction = ShowNotificationAction | HideNotificationAction;
 

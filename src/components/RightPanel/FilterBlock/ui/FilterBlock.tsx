@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./FilterBlock.module.css";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { saveState, setFilter } from "../../../model/cardEditorSlice";
-import { Color, colorList } from "../data/templateColors";
+import { saveState, setFilter } from "../../../../model/cardEditorSlice";
+import { Color, colorList } from "../model/templateColors";
 
 const FilterBlock = () => {
   const filter = useAppSelector((state) => state.cardEditor.filter);
@@ -20,14 +20,7 @@ const FilterBlock = () => {
   };
 
   const changeColorTemplate = (color: Color) => {
-    dispatch(
-      setFilter({
-        r: color.r,
-        g: color.g,
-        b: color.b,
-        a: color.a,
-      }),
-    );
+    dispatch(setFilter(color));
     dispatch(saveState());
   };
 

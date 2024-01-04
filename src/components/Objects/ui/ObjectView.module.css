@@ -1,0 +1,5 @@
+.objectContainer {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+}

@@ -1,0 +1,15 @@
+.container {
+    margin-top: 20px;
+}
+
+.title {
+    text-align: center;
+}
+
+.buttonContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}

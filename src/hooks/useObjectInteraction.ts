@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BoundingBoxType, ObjectType } from "../types/types";
-import { ResizeDirection } from "../components/Objects/ResizeControls/ResizeDirection";
+import { ResizeDirectionType } from "../components/Objects/ResizeControls/model/ResizeDirectionType";
 
 const topResize = (
   oldScaleY: number,
@@ -81,7 +81,7 @@ const resize = (
   object: ObjectType,
   deltaX: number,
   deltaY: number,
-  isResizing: ResizeDirection,
+  isResizing: ResizeDirectionType,
 ): BoundingBoxType => {
   let newScaleX = object.scaleX;
   let newScaleY = object.scaleY;
@@ -146,7 +146,9 @@ const useObjectInteraction = ({
     x: currentObject.posX,
     y: currentObject.posY,
   });
-  const [isResizing, setIsResizing] = useState<ResizeDirection | null>(null);
+  const [isResizing, setIsResizing] = useState<ResizeDirectionType | null>(
+    null,
+  );
 
   const clamp = (value: number, min: number, max: number, sideSize: number) => {
     if (sideSize + value > 1) {
@@ -157,7 +159,7 @@ const useObjectInteraction = ({
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement>,
-    resizeDirection?: ResizeDirection,
+    resizeDirection?: ResizeDirectionType,
   ) => {
     if (resizeDirection) {
       setIsResizing(resizeDirection);

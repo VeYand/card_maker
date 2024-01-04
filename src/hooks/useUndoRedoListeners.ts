@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../redux/hooks";
 import { useEffect } from "react";
-import { redo, undo } from "../components/model/cardEditorSlice";
+import { redo, undo } from "../model/cardEditorSlice";
 
 const useUndoRedoListeners = () => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./CreateObjectsPanel.module.css";
-import { ImageImportBlock } from "../ImageImportBlock/ImageImportBlock";
-import { CreateTextBlock } from "../CreateTextBlock/CreateTextBlock";
-import { CreateArtObjectBlock } from "../CreateArtObjectBlock/CreateArtObjectBlock";
+import { ImageImportBlock } from "../ImageImportBlock/ui/ImageImportBlock";
+import { CreateTextBlock } from "../CreateTextBlock/ui/CreateTextBlock";
+import { CreateArtObjectBlock } from "../CreateArtObjectBlock/ui/CreateArtObjectBlock";
 
 const CreateObjectsPanel = () => {
   return (
@@ -14,4 +14,4 @@ const CreateObjectsPanel = () => {
   );
 };
 
-export default CreateObjectsPanel;
+export { CreateObjectsPanel };

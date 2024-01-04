@@ -3,4 +3,4 @@ import { MainPage } from "./pages/mainPage";
 
 const App = () => <MainPage />;
 
-export default App;
+export { App };
