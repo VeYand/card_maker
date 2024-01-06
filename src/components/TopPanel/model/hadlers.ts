@@ -22,8 +22,8 @@ const validateObject = (obj: any): obj is ObjectType => {
     return (
         typeof obj.id === "string" &&
         typeof obj.isSelected === "boolean" &&
-        typeof obj.scaleX === "number" &&
-        typeof obj.scaleY === "number" &&
+        typeof obj.width === "number" &&
+        typeof obj.height === "number" &&
         typeof obj.posX === "number" &&
         typeof obj.posY === "number" &&
         (typeof obj.objectSrc === "string" ||
