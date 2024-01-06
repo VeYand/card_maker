@@ -2,6 +2,7 @@
     background: white;
     border: rgb(128 128 128) 2px solid;
     width: min-content;
-    padding: 0 40px;
+    padding: 0 40px 50px;
     flex-grow: 1;
+    height: 100%;
 }
