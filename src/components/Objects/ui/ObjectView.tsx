@@ -43,8 +43,8 @@ const ObjectView = ({
     otherObjects: allObjects.filter((curObject) => {
       return curObject.isSelected && object.id !== curObject.id;
     }),
-    canvasSize: useAppSelector((state) => state.cardEditor.canvas),
     changeObject: changeObjectHandler,
+    minSize: { width: canvasSize.width * 0.05, height: canvasSize.height * 0.05 },
   });
 
   const handleMouseUp = () => {
@@ -85,11 +85,11 @@ const ObjectView = ({
     <div
       onMouseDown={handleMouseDown}
       style={{
-        width: `${object.scaleX * canvasSize.width}px`,
-        height: `${object.scaleY * canvasSize.height}px`,
-        left: `${object.posX * canvasSize.width}px`,
-        top: `${object.posY * canvasSize.height}px`,
-        outline: object.isSelected ? "2px solid blue" : "",
+        width: `${object.width}px`,
+        height: `${object.height}px`,
+        left: `${object.posX}px`,
+        top: `${object.posY}px`,
+        outline: object.isSelected ? "2px dashed #0078D7FF" : undefined,
       }}
       className={classes.objectContainer}
     >

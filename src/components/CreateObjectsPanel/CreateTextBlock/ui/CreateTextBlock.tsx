@@ -1,20 +1,22 @@
 import React from "react";
 import classes from "./CreateTextBlock.module.css";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { addObjects } from "../../../../model/cardEditorSlice";
 import { TextType } from "../../../../types/types";
 import { Button } from "../../../../common/Button/Button";
 
 const CreateTextBlock = () => {
   const dispatch = useAppDispatch();
+  const canvasSize = useAppSelector((state) => state.cardEditor.canvas);
+
   const createTextBlock = () => {
     const textObject: TextType = {
       id: Date.now().toString(),
       isSelected: false,
       posX: 0,
       posY: 0,
-      scaleX: 0.2,
-      scaleY: 0.2,
+      width: canvasSize.width * 0.2,
+      height: canvasSize.height * 0.2,
       content: "",
       fontColor: "black",
       fontSize: 20,

@@ -34,14 +34,8 @@ const handleImageUpload = (
         isSelected: true,
         posX: 0,
         posY: 0,
-        scaleX:
-          proportions > 1
-            ? width / proportions / canvasSize.width
-            : width / canvasSize.width,
-        scaleY:
-          proportions > 1
-            ? height / proportions / canvasSize.height
-            : height / canvasSize.height,
+        width: proportions > 1 ? width / proportions : width,
+        height: proportions > 1 ? height / proportions : height,
       };
 
       addImage(imageObject);

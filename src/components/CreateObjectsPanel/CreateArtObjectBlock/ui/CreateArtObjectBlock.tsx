@@ -16,8 +16,8 @@ const CreateArtObjectBlock = () => {
           isSelected: false,
           posX: 0,
           posY: 0,
-          scaleX: 0.2,
-          scaleY: 0.2,
+          width: 100,
+          height: 100,
         },
       ]),
     );

@@ -4,8 +4,8 @@ type PositionType = {
 };
 
 type SizeType = {
-  scaleX: number;
-  scaleY: number;
+  width: number;
+  height: number;
 };
 
 type BoundingBoxType = PositionType & SizeType;
@@ -73,6 +73,7 @@ type CardDataType = {
 };
 
 export type {
+  SizeType,
   ArtType,
   ImageType,
   TextType,
