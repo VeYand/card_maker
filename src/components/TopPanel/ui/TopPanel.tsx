@@ -5,7 +5,12 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks"
 import { handleJSONLoad, saveAsImage, saveAsJson } from "../model/hadlers"
 import { Button } from "../../../common/Button/Button"
 import { CardDataType } from "../../../types/types"
-import { redo, setCardState, undo } from "../../../model/cardEditorSlice"
+import {
+    redo,
+    resetCardState,
+    setCardState,
+    undo,
+} from "../../../model/cardEditorSlice"
 import {
     hideNotification,
     showNotification,
@@ -31,8 +36,11 @@ const TopPanel = () => {
     const handleCanvasAction = (action: CanvasActionType) => {
         switch (action) {
             case "Current Window":
+                dispatch(resetCardState())
+                showMessage("Карточка очищена")
                 break
             case "New Window":
+                // TODO: Реализовать открытие редактора пустой карточки в новом окне
                 break
             default:
                 break

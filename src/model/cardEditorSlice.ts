@@ -28,6 +28,7 @@ const initialState: ICardEditorState = {
 
 const history = createHistory<ICardEditorState>(initialState)
 
+const RESET_CARD_STATE = "RESET_CARD_STATE"
 const SET_CARD_STATE = "SET_CARD_STATE"
 const SET_CANVAS_SIZE = "SET_CANVAS_SIZE"
 const SET_FILTER = "SET_FILTER"
@@ -41,6 +42,10 @@ const MOVE_FOREGROUND = "MOVE_FOREGROUND"
 const UNDO = "UNDO"
 const REDO = "REDO"
 const SAVE_STATE = "SAVE_STATE"
+
+interface IResetCardStateAction {
+    type: typeof RESET_CARD_STATE
+}
 
 interface ISetCardStateAction {
     type: typeof SET_CARD_STATE
@@ -102,6 +107,10 @@ interface IRedoAction {
 interface ISaveStateAction {
     type: typeof SAVE_STATE
 }
+
+const resetCardState = (): IResetCardStateAction => ({
+    type: RESET_CARD_STATE,
+})
 
 const setCardState = (
     payload: ISetCardStateAction["payload"],
@@ -205,6 +214,7 @@ const moveObjects = (
 }
 
 type CardEditorActionType =
+    | IResetCardStateAction
     | ISetCardStateAction
     | ISetCanvasSizeAction
     | ISetFilterAction
@@ -228,6 +238,9 @@ const cardEditorReducer = (
     let nextState: ICardEditorState | null
     let newState: ICardEditorState
     switch (action.type) {
+        case RESET_CARD_STATE:
+            history.addHistoryItem(initialState)
+            return initialState
         case SET_CARD_STATE:
             history.addHistoryItem(action.payload)
             return action.payload
@@ -318,6 +331,7 @@ const cardEditorReducer = (
 }
 
 export {
+    resetCardState,
     setCardState,
     cardEditorReducer,
     resetAllSelections,
