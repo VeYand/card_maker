@@ -1,17 +1,17 @@
-import React, { ButtonHTMLAttributes, ReactNode } from "react";
-import classes from "./Button.module.css";
+import React, { ButtonHTMLAttributes, ReactNode } from "react"
+import classes from "./Button.module.css"
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: ReactNode;
-  onClick?: () => void;
+    children?: ReactNode
+    onClick?: () => void
 }
 
 const Button = ({ children, onClick, ...props }: IButton) => {
-  return (
-    <button {...props} className={classes.topButton} onClick={onClick}>
-      {children}
-    </button>
-  );
-};
+    return (
+        <button {...props} className={classes.topButton} onClick={onClick}>
+            {children}
+        </button>
+    )
+}
 
-export { Button };
+export { Button }

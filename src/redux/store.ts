@@ -1,16 +1,16 @@
-import { combineReducers, createStore } from "redux";
-import { cardEditorReducer } from "../model/cardEditorSlice";
-import { notificationReducer } from "../components/TopPanel/model/notificationSlice";
+import { combineReducers, createStore } from "redux"
+import { cardEditorReducer } from "../model/cardEditorSlice"
+import { notificationReducer } from "../components/TopPanel/model/notificationSlice"
 
 const rootReducer = combineReducers({
-  cardEditor: cardEditorReducer,
-  notification: notificationReducer,
-});
+    cardEditor: cardEditorReducer,
+    notification: notificationReducer,
+})
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer)
 
-type RootState = ReturnType<typeof store.getState>;
-type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof store.getState>
+type AppDispatch = typeof store.dispatch
 
-export { store };
-export type { RootState, AppDispatch };
+export { store }
+export type { RootState, AppDispatch }

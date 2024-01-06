@@ -1,6 +1,6 @@
-import "./styles/styles.css";
-import { MainPage } from "./pages/mainPage";
+import "./styles/styles.css"
+import { MainPage } from "./pages/mainPage"
 
-const App = () => <MainPage />;
+const App = () => <MainPage />
 
-export { App };
+export { App }
