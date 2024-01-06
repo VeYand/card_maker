@@ -6,7 +6,10 @@ import { handleJSONLoad, saveAsImage, saveAsJson } from "../model/hadlers"
 import { Button } from "../../../common/Button/Button"
 import { CardDataType } from "../../../types/types"
 import { redo, setCardState, undo } from "../../../model/cardEditorSlice"
-import { hideNotification, showNotification } from "../model/notificationSlice"
+import {
+    hideNotification,
+    showNotification,
+} from "../../NotificationBlock/model/notificationSlice"
 
 type CanvasActionType = "Current Window" | "New Window"
 type SaveActionType = "JPEG" | "PNG" | "JSON"
@@ -15,7 +18,6 @@ const saveActions: SaveActionType[] = ["JPEG", "PNG", "JSON"]
 
 const TopPanel = () => {
     const cardEditorState = useAppSelector((state) => state.cardEditor)
-    const notificationData = useAppSelector((state) => state.notification)
     const jsonInputRef = useRef<HTMLInputElement | null>(null)
     const dispatch = useAppDispatch()
 
@@ -77,37 +79,28 @@ const TopPanel = () => {
     }
 
     return (
-        <>
-            <div
-                className={`${classes.appMessage} ${
-                    notificationData.isVisible ? classes.appMessageShow : ""
-                }`}
-            >
-                {notificationData.message}
-            </div>
-            <div className={classes.topPanel}>
-                <DropDownButtons
-                    parentButtonName={"New canvas"}
-                    childButtonNames={canvasActions}
-                    onSelect={handleCanvasAction}
-                />
-                <DropDownButtons
-                    parentButtonName={"Save as"}
-                    childButtonNames={saveActions}
-                    onSelect={handleSaveAction}
-                />
-                <input
-                    type="file"
-                    accept=".json"
-                    ref={jsonInputRef}
-                    onChange={(event) => handleJSONLoad(event, loadCard)}
-                    style={{ display: "none" }}
-                />
-                <Button onClick={handleLoadAction}>Load json</Button>
-                <Button onClick={handleUndo}>Undo</Button>
-                <Button onClick={handleRedo}>Redo</Button>
-            </div>
-        </>
+        <div className={classes.topPanel}>
+            <DropDownButtons
+                parentButtonName={"New canvas"}
+                childButtonNames={canvasActions}
+                onSelect={handleCanvasAction}
+            />
+            <DropDownButtons
+                parentButtonName={"Save as"}
+                childButtonNames={saveActions}
+                onSelect={handleSaveAction}
+            />
+            <input
+                type="file"
+                accept=".json"
+                ref={jsonInputRef}
+                onChange={(event) => handleJSONLoad(event, loadCard)}
+                style={{ display: "none" }}
+            />
+            <Button onClick={handleLoadAction}>Load json</Button>
+            <Button onClick={handleUndo}>Undo</Button>
+            <Button onClick={handleRedo}>Redo</Button>
+        </div>
     )
 }
 

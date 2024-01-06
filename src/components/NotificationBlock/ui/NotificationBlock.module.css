@@ -1,0 +1,21 @@
+.appMessage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 30%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    border-bottom: 1px darkgray solid;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-family: "Anonymous Pro", serif;
+}
+
+.appMessageShow {
+    opacity: 1;
+}

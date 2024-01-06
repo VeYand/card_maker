@@ -9,6 +9,7 @@ import classes from "./mainPage.module.css"
 import { useIsMultiplySelect } from "../hooks/useIsMultiplySelect"
 import { useUndoRedoListeners } from "../hooks/useUndoRedoListeners"
 import { CreateObjectsPanel } from "../components/CreateObjectsPanel/ui/CreateObjectsPanel"
+import { NotificationBlock } from "../components/NotificationBlock/ui/NotificationBlock"
 
 const MainPage = () => {
     const objects = useAppSelector((state) => state.cardEditor.objects)
@@ -17,6 +18,7 @@ const MainPage = () => {
 
     return (
         <div>
+            <NotificationBlock />
             <TopPanel />
             <div className={classes.inlineContainer}>
                 <CreateObjectsPanel />
