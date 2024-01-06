@@ -7,4 +7,5 @@
     outline: none !important;
     resize: none;
     overflow: hidden;
+    white-space: break-spaces;
 }
