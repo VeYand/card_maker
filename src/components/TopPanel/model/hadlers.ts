@@ -84,12 +84,45 @@ const handleJSONLoad = (
     }
 }
 
+const replaceTextareaWithP = (canvas: HTMLCanvasElement | null) => {
+    const textAreas = canvas?.querySelectorAll("textarea")
+    const replacementData: {
+        textarea: HTMLTextAreaElement
+        p: HTMLParagraphElement
+    }[] = []
+
+    if (textAreas) {
+        textAreas.forEach((textarea) => {
+            const p = document.createElement("p")
+            p.textContent = textarea.value
+
+            const textareaStyles = window.getComputedStyle(textarea)
+            for (let i = 0; i < textareaStyles.length; i++) {
+                const styleName = textareaStyles[i]
+                p.style.setProperty(
+                    styleName,
+                    textareaStyles.getPropertyValue(styleName),
+                )
+            }
+
+            replacementData.push({ textarea, p })
+
+            textarea.parentNode?.replaceChild(p, textarea)
+        })
+    }
+
+    return replacementData
+}
+
 const saveAsImage = (
     format: "JPEG" | "PNG",
     showMessage: (message: string) => void,
 ) => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement | null
+
     if (canvas) {
+        const originalTextareaData = replaceTextareaWithP(canvas)
+
         html2canvas(canvas, {
             useCORS: true,
         })
@@ -111,9 +144,16 @@ const saveAsImage = (
                 document.body.appendChild(link)
                 link.click()
                 document.body.removeChild(link)
+
+                originalTextareaData.forEach(({ textarea, p }) => {
+                    p.parentNode?.replaceChild(textarea, p)
+                })
                 showMessage("Saved successfully")
             })
             .catch(() => {
+                originalTextareaData.forEach(({ textarea, p }) => {
+                    p.parentNode?.replaceChild(textarea, p)
+                })
                 showMessage("Failed to save")
             })
     }
