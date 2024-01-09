@@ -25,7 +25,7 @@ const CreateArtObjectBlock = () => {
 
     return (
         <div className={classes.container}>
-            <h3 className={classes.title}>Арт Объекты</h3>
+            <h3 className={classes.title}>Art Objects</h3>
             <div className={classes.previewImagesBlock}>
                 {artObjectList.map((src: string) => {
                     return (

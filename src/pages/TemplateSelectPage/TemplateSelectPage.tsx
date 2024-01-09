@@ -10,12 +10,12 @@ interface ITemplateSelectPage {
 
 const TemplateSelectPage = ({ setSelectedTemplate }: ITemplateSelectPage) => {
     const emptyCardTemplate: CardTemplateType = {
-        title: "Пустой",
+        title: "Empty",
     }
 
     return (
         <div className={classes.pageContainer}>
-            <div className={classes.title}> Выберите шаблон карточки</div>
+            <div className={classes.title}>Select a card template</div>
             <div className={classes.cardTemplateContainer}>
                 <div onClick={() => setSelectedTemplate(emptyCardTemplate)}>
                     <CardTemplate cardTemplate={emptyCardTemplate} />

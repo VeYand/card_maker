@@ -41,13 +41,13 @@ const ToolBlock = () => {
     const selectedObject = selectedObjects[0]
     let selectedObjectType: string
     if (isTextType(selectedObject)) {
-        selectedObjectType = "текст"
+        selectedObjectType = "text"
     } else if (isImageType(selectedObject)) {
-        selectedObjectType = "изображение"
+        selectedObjectType = "image"
     } else if (isArtType(selectedObject)) {
-        selectedObjectType = "арт объект"
+        selectedObjectType = "art object"
     } else {
-        selectedObjectType = "объект"
+        selectedObjectType = "object"
     }
 
     const removeSelectedObjects = () => {
@@ -115,26 +115,26 @@ const ToolBlock = () => {
         <div className={classes.container}>
             <h3 className={classes.containerTitle}>
                 {!isMultiplySelect
-                    ? "Выделенный объект: " + selectedObjectType
-                    : "Множественное выделение"}
+                    ? "Selected object: " + selectedObjectType
+                    : "Multiple selection"}
             </h3>
             {isTextType(selectedObject) && !isMultiplySelect ? (
                 <div className={classes.textPropsChangeContainer}>
                     <CustomSelect
                         options={fontColors}
-                        defaultValue={"Выберите цвет"}
+                        defaultValue={"Choose a color"}
                         value={(selectedObject as TextType).fontColor}
                         onChange={changeTextColor}
                     />
                     <CustomSelect
                         options={fontSizes}
-                        defaultValue={"Выберите размер"}
+                        defaultValue={"Choose a font size"}
                         value={(selectedObject as TextType).fontSize.toString()}
                         onChange={changeTextSize}
                     />
                     <CustomSelect
                         options={fontFamilies}
-                        defaultValue={"Выберите шрифт"}
+                        defaultValue={"Choose a font family"}
                         value={(selectedObject as TextType).fontFamily}
                         onChange={changeTextFontFamily}
                     />
@@ -186,16 +186,16 @@ const ToolBlock = () => {
                 <div className={classes.buttonsInline}>
                     <Button onClick={removeSelectedObjects}>
                         {isMultiplySelect
-                            ? "Удалить выделенные объекты"
-                            : "Удалить выделенный объект"}
+                            ? "Delete selected objects"
+                            : "Delete the selected object"}
                     </Button>
                 </div>
                 <div className={classes.buttonsInline}>
                     <Button onClick={moveForegroundClickHandler}>
-                        На передний план
+                        Move to the foreground
                     </Button>
                     <Button onClick={moveBackgroundClickHandler}>
-                        На задний план
+                        Move to the background
                     </Button>
                 </div>
             </div>

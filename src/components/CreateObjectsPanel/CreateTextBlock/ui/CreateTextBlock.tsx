@@ -29,11 +29,9 @@ const CreateTextBlock = () => {
 
     return (
         <div className={classes.container}>
-            <h3 className={classes.title}>Текст</h3>
+            <h3 className={classes.title}>Text</h3>
             <div className={classes.buttonContainer}>
-                <Button onClick={createTextBlock}>
-                    Создать текстовый блок
-                </Button>
+                <Button onClick={createTextBlock}>Create a text block</Button>
             </div>
         </div>
     )

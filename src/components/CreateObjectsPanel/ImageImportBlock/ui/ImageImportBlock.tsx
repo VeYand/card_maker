@@ -15,7 +15,7 @@ const ImageImportBlock = () => {
 
     return (
         <div className={classes.block}>
-            <h3 className={classes.title}>Загрузить изображение</h3>
+            <h3 className={classes.title}>Upload an image</h3>
             <input
                 id="input-image-from-pc"
                 type="file"
@@ -25,7 +25,7 @@ const ImageImportBlock = () => {
             />
             <div className={classes.buttonBlock}>
                 <Button>
-                    <label htmlFor="input-image-from-pc">Выбрать файл</label>
+                    <label htmlFor="input-image-from-pc">Select a file</label>
                 </Button>
             </div>
         </div>

@@ -2,7 +2,7 @@ import { CardTemplateType } from "../types/types"
 
 const cardTemplates: CardTemplateType[] = [
     {
-        title: "Рождество",
+        title: "Christmas",
         previewImageSrc: "images/cardTemplates/christmas.png",
         data: {
             canvas: { width: 800, height: 600 },
@@ -35,7 +35,7 @@ const cardTemplates: CardTemplateType[] = [
         },
     },
     {
-        title: "День рождения",
+        title: "Birthday",
         previewImageSrc: "images/cardTemplates/birthday.png",
         data: {
             canvas: { width: 800, height: 600 },
