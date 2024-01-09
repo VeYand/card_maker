@@ -72,6 +72,12 @@ type CardDataType = {
     objects: ObjectListType
 }
 
+type CardTemplateType = {
+    title: string
+    previewImageSrc?: string
+    data?: CardDataType
+}
+
 export type {
     SizeType,
     ArtType,
@@ -84,6 +90,7 @@ export type {
     CanvasType,
     FilterType,
     CardDataType,
+    CardTemplateType,
 }
 
 export { isArtType, isImageType, isTextType }
